@@ -1,0 +1,586 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Registered Massage Therapy</title>
+    <style>
+      * {
+        box-sizing: border-box;
+      }
+
+      :root {
+        color-scheme: light;
+        --bg: #f7f5ef;
+        --surface: #ffffff;
+        --surface-soft: #eef5ef;
+        --ink: #1f2d28;
+        --muted: #65726d;
+        --line: #dce5dd;
+        --sage: #5f8f72;
+        --sage-dark: #315f49;
+        --clay: #b97855;
+        --cream: #fffaf1;
+        --shadow: 0 22px 70px rgba(31, 45, 40, 0.12);
+      }
+
+      html {
+        scroll-behavior: smooth;
+      }
+
+      body {
+        min-height: 100vh;
+        margin: 0;
+        font-family: Arial, Helvetica, sans-serif;
+        background: var(--bg);
+        color: var(--ink);
+      }
+
+      a {
+        color: inherit;
+        text-decoration: none;
+      }
+
+      button,
+      input,
+      textarea {
+        font: inherit;
+      }
+
+      .site-header {
+        position: sticky;
+        top: 0;
+        z-index: 20;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 22px;
+        width: min(1180px, calc(100% - 32px));
+        margin: 0 auto;
+        padding: 16px 0;
+        backdrop-filter: blur(16px);
+      }
+
+      .brand,
+      .site-header nav,
+      .hero-actions,
+      .service-meta,
+      .contact-line {
+        display: flex;
+        align-items: center;
+      }
+
+      .brand {
+        gap: 10px;
+        font-size: 19px;
+        font-weight: 900;
+      }
+
+      .brand-mark {
+        display: grid;
+        place-items: center;
+        width: 40px;
+        height: 40px;
+        border-radius: 8px;
+        background: var(--sage-dark);
+        color: #ffffff;
+        font-weight: 900;
+      }
+
+      .site-header nav {
+        gap: clamp(14px, 3vw, 32px);
+        color: var(--muted);
+        font-size: 15px;
+        font-weight: 800;
+      }
+
+      .site-header nav a:hover {
+        color: var(--sage-dark);
+      }
+
+      .header-cta,
+      .primary-button,
+      .secondary-button {
+        display: inline-grid;
+        place-items: center;
+        min-height: 48px;
+        border-radius: 8px;
+        padding: 0 20px;
+        font-weight: 900;
+      }
+
+      .header-cta,
+      .primary-button {
+        background: var(--sage-dark);
+        color: #ffffff;
+      }
+
+      .primary-button:hover,
+      .header-cta:hover {
+        background: #254737;
+      }
+
+      .secondary-button {
+        border: 1px solid rgba(255, 255, 255, 0.68);
+        color: #ffffff;
+      }
+
+      main {
+        width: min(1180px, calc(100% - 32px));
+        margin: 0 auto;
+      }
+
+      .hero {
+        position: relative;
+        display: grid;
+        grid-template-columns: minmax(0, 0.95fr) minmax(300px, 0.8fr);
+        gap: clamp(26px, 5vw, 62px);
+        align-items: center;
+        min-height: clamp(610px, 82vh, 760px);
+        overflow: hidden;
+        border-radius: 8px;
+        padding: clamp(30px, 6vw, 72px);
+        background:
+          linear-gradient(90deg, rgba(31, 45, 40, 0.9), rgba(31, 45, 40, 0.5) 52%, rgba(31, 45, 40, 0.12)),
+          url("assets/massage-hero.png") center / cover;
+        color: #ffffff;
+        box-shadow: var(--shadow);
+      }
+
+      .eyebrow {
+        margin: 0 0 12px;
+        color: #d7e9d9;
+        font-size: 13px;
+        font-weight: 900;
+        letter-spacing: 0;
+        text-transform: uppercase;
+      }
+
+      h1,
+      h2,
+      h3,
+      p {
+        margin-top: 0;
+      }
+
+      h1 {
+        max-width: 720px;
+        margin-bottom: 20px;
+        font-size: clamp(44px, 7vw, 84px);
+        line-height: 0.98;
+        letter-spacing: 0;
+      }
+
+      h2 {
+        margin-bottom: 14px;
+        font-size: clamp(30px, 4vw, 52px);
+        line-height: 1.06;
+        letter-spacing: 0;
+      }
+
+      h3 {
+        margin-bottom: 10px;
+        font-size: 23px;
+        letter-spacing: 0;
+      }
+
+      .lede {
+        max-width: 640px;
+        margin-bottom: 28px;
+        color: rgba(255, 255, 255, 0.88);
+        font-size: 19px;
+        line-height: 1.6;
+      }
+
+      .hero-actions {
+        flex-wrap: wrap;
+        gap: 12px;
+      }
+
+      .hero-card {
+        align-self: end;
+        padding: 24px;
+        border: 1px solid rgba(255, 255, 255, 0.26);
+        border-radius: 8px;
+        background: rgba(255, 255, 255, 0.92);
+        color: var(--ink);
+        box-shadow: var(--shadow);
+      }
+
+      .hero-card p {
+        color: var(--muted);
+        line-height: 1.55;
+      }
+
+      .hours-list {
+        display: grid;
+        gap: 10px;
+        margin: 18px 0 0;
+        padding: 0;
+        list-style: none;
+      }
+
+      .hours-list li {
+        display: flex;
+        justify-content: space-between;
+        gap: 16px;
+        border-top: 1px solid var(--line);
+        padding-top: 10px;
+        color: var(--muted);
+      }
+
+      .hours-list strong {
+        color: var(--ink);
+      }
+
+      .section {
+        padding: 62px 0;
+      }
+
+      .section-heading {
+        max-width: 720px;
+        margin-bottom: 24px;
+      }
+
+      .section-heading .eyebrow {
+        color: var(--sage-dark);
+      }
+
+      .body-copy {
+        max-width: 680px;
+        color: var(--muted);
+        font-size: 18px;
+        line-height: 1.65;
+      }
+
+      .service-grid {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 16px;
+      }
+
+      .service-card,
+      .about-panel,
+      .booking-panel,
+      .contact-panel,
+      .note-panel {
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        background: var(--surface);
+        box-shadow: 0 16px 44px rgba(31, 45, 40, 0.08);
+      }
+
+      .service-card {
+        display: grid;
+        gap: 12px;
+        min-height: 260px;
+        padding: 24px;
+      }
+
+      .service-card p {
+        color: var(--muted);
+        line-height: 1.55;
+      }
+
+      .service-meta {
+        gap: 10px;
+        margin-top: auto;
+        color: var(--sage-dark);
+        font-size: 14px;
+        font-weight: 900;
+      }
+
+      .service-meta span {
+        display: grid;
+        place-items: center;
+        width: 32px;
+        height: 32px;
+        border-radius: 8px;
+        background: var(--surface-soft);
+      }
+
+      .split-section {
+        display: grid;
+        grid-template-columns: minmax(0, 0.85fr) minmax(320px, 1fr);
+        gap: clamp(24px, 5vw, 60px);
+        align-items: start;
+      }
+
+      .about-panel {
+        padding: 28px;
+        background: var(--cream);
+      }
+
+      .credential-list {
+        display: grid;
+        gap: 12px;
+        margin: 0;
+        padding: 0;
+        list-style: none;
+      }
+
+      .credential-list li {
+        display: grid;
+        grid-template-columns: 38px 1fr;
+        gap: 12px;
+        align-items: start;
+        color: var(--muted);
+        line-height: 1.5;
+      }
+
+      .credential-list span {
+        display: grid;
+        place-items: center;
+        width: 34px;
+        height: 34px;
+        border-radius: 8px;
+        background: var(--sage);
+        color: #ffffff;
+        font-weight: 900;
+      }
+
+      .booking-band {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) minmax(300px, 420px);
+        gap: 18px;
+        align-items: stretch;
+      }
+
+      .booking-panel,
+      .contact-panel,
+      .note-panel {
+        padding: 26px;
+      }
+
+      .booking-panel {
+        background: var(--sage-dark);
+        color: #ffffff;
+      }
+
+      .booking-panel .body-copy {
+        color: rgba(255, 255, 255, 0.82);
+      }
+
+      .booking-panel .primary-button {
+        width: fit-content;
+        background: #ffffff;
+        color: var(--sage-dark);
+      }
+
+      .contact-panel {
+        display: grid;
+        gap: 14px;
+      }
+
+      .contact-line {
+        gap: 12px;
+        color: var(--muted);
+        line-height: 1.45;
+      }
+
+      .contact-line strong {
+        display: block;
+        color: var(--ink);
+      }
+
+      .contact-icon {
+        display: grid;
+        place-items: center;
+        width: 38px;
+        height: 38px;
+        flex: 0 0 auto;
+        border-radius: 8px;
+        background: var(--surface-soft);
+        color: var(--sage-dark);
+        font-weight: 900;
+      }
+
+      .note-panel {
+        margin-top: 18px;
+        color: var(--muted);
+        line-height: 1.55;
+      }
+
+      footer {
+        width: min(1180px, calc(100% - 32px));
+        margin: 0 auto;
+        padding: 28px 0 36px;
+        border-top: 1px solid var(--line);
+        color: var(--muted);
+        font-size: 14px;
+      }
+
+      @media (max-width: 900px) {
+        .site-header nav {
+          display: none;
+        }
+
+        .hero,
+        .service-grid,
+        .split-section,
+        .booking-band {
+          grid-template-columns: 1fr;
+        }
+
+        .hero {
+          min-height: auto;
+        }
+      }
+
+      @media (max-width: 560px) {
+        .site-header,
+        main,
+        footer {
+          width: min(100% - 22px, 1180px);
+        }
+
+        .hero {
+          padding: 24px;
+        }
+
+        h1 {
+          font-size: 42px;
+        }
+
+        h2 {
+          font-size: 31px;
+        }
+
+        .hero-actions,
+        .primary-button,
+        .secondary-button,
+        .booking-panel .primary-button {
+          width: 100%;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header class="site-header">
+      <a class="brand" href="#" aria-label="Registered Massage Therapy home">
+        <span class="brand-mark" aria-hidden="true">R</span>
+        <span>Riverstone RMT</span>
+      </a>
+      <nav aria-label="Main navigation">
+        <a href="#services">Services</a>
+        <a href="#about">About</a>
+        <a href="#booking">Book</a>
+        <a href="#contact">Contact</a>
+      </nav>
+      <a class="header-cta" href="#booking">Book now</a>
+    </header>
+
+    <main>
+      <section class="hero" aria-labelledby="page-title">
+        <div>
+          <p class="eyebrow">Registered massage therapy</p>
+          <h1 id="page-title">Personalized massage therapy for everyday recovery.</h1>
+          <p class="lede">
+            Therapeutic treatments designed around your goals, comfort, and day-to-day movement.
+          </p>
+          <div class="hero-actions">
+            <a class="primary-button" href="#booking">Request an appointment</a>
+            <a class="secondary-button" href="#services">View services</a>
+          </div>
+        </div>
+
+        <aside class="hero-card" aria-label="Clinic availability">
+          <h2>Now accepting clients</h2>
+          <p>
+            Choose focused treatment, relaxation-focused care, or ongoing maintenance with a registered massage therapist.
+          </p>
+          <ul class="hours-list">
+            <li><strong>Weekdays</strong><span>10:00 AM - 7:00 PM</span></li>
+            <li><strong>Saturday</strong><span>9:00 AM - 3:00 PM</span></li>
+            <li><strong>Receipts</strong><span>Provided for benefits</span></li>
+          </ul>
+        </aside>
+      </section>
+
+      <section class="section" id="services" aria-labelledby="services-title">
+        <div class="section-heading">
+          <p class="eyebrow">Treatment options</p>
+          <h2 id="services-title">Care that meets you where you are.</h2>
+          <p class="body-copy">
+            Sessions begin with a short check-in so your treatment plan can reflect your current comfort level, priorities, and preferences.
+          </p>
+        </div>
+
+        <div class="service-grid">
+          <article class="service-card">
+            <h3>Therapeutic massage</h3>
+            <p>Focused work for areas of tension, postural strain, and movement-related discomfort.</p>
+            <div class="service-meta"><span>45</span>45, 60, or 90 minutes</div>
+          </article>
+
+          <article class="service-card">
+            <h3>Relaxation massage</h3>
+            <p>A slower, calming session for stress, nervous-system settling, and general wellness.</p>
+            <div class="service-meta"><span>60</span>60 or 90 minutes</div>
+          </article>
+
+          <article class="service-card">
+            <h3>Maintenance care</h3>
+            <p>Regular massage therapy support for active routines, desk work, and long-term self-care.</p>
+            <div class="service-meta"><span>R</span>Custom plan</div>
+          </article>
+        </div>
+      </section>
+
+      <section class="section split-section" id="about" aria-labelledby="about-title">
+        <div>
+          <p class="eyebrow">Meet your therapist</p>
+          <h2 id="about-title">A grounded, practical approach to massage therapy.</h2>
+          <p class="body-copy">
+            Riverstone RMT is built around clear communication, consent-based care, and treatments that feel supportive rather than rushed. Replace this section with the therapist&apos;s real name, registration details, and personal approach.
+          </p>
+        </div>
+
+        <div class="about-panel">
+          <ul class="credential-list">
+            <li><span>1</span><div><strong>Registered care</strong><br />Receipts are available for clients submitting to extended health benefits.</div></li>
+            <li><span>2</span><div><strong>Comfort-led sessions</strong><br />Pressure, positioning, and treatment focus are adjusted throughout your appointment.</div></li>
+            <li><span>3</span><div><strong>Simple aftercare</strong><br />You leave with practical suggestions when stretching, hydration, or rest may be helpful.</div></li>
+          </ul>
+        </div>
+      </section>
+
+      <section class="section" id="booking" aria-labelledby="booking-title">
+        <div class="booking-band">
+          <div class="booking-panel">
+            <p class="eyebrow">Appointments</p>
+            <h2 id="booking-title">Ready to book your next massage?</h2>
+            <p class="body-copy">
+              Add the real booking link here, or connect this button to an online scheduler, phone number, or contact form.
+            </p>
+            <a class="primary-button" href="mailto:hello@example.com?subject=Massage%20therapy%20appointment">Email to book</a>
+          </div>
+
+          <div class="contact-panel" id="contact" aria-label="Contact information">
+            <h3>Contact</h3>
+            <div class="contact-line">
+              <span class="contact-icon" aria-hidden="true">@</span>
+              <div><strong>Email</strong>hello@example.com</div>
+            </div>
+            <div class="contact-line">
+              <span class="contact-icon" aria-hidden="true">#</span>
+              <div><strong>Phone</strong>(555) 123-4567</div>
+            </div>
+            <div class="contact-line">
+              <span class="contact-icon" aria-hidden="true">P</span>
+              <div><strong>Clinic</strong>123 Wellness Avenue, Your City</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="note-panel">
+          Massage therapy is not a substitute for emergency medical care. If you have a new injury, severe symptoms, or urgent health concerns, contact an appropriate healthcare provider.
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <span>© 2026 Riverstone Registered Massage Therapy. Replace sample business details before publishing.</span>
+    </footer>
+  </body>
+</html>
